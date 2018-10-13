@@ -18,9 +18,9 @@ const AppStyles = {
         justifyContent: 'space-between',
     },  
     circle: {
-        width: 12,
-        height: 12,
-        borderRadius: 12/2,
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
         backgroundColor: '#d4b3ed',
         marginLeft: 10
     },     
@@ -77,9 +77,9 @@ const AppStyles = {
         left: 0
     },
     menuicon : {
-        width: 28,
-        height: 28,
-        marginTop: 13,
+        width: 23,
+        height: 23,
+        marginTop: 16,
         marginLeft: 10,
     },
     headertitleDiv: {        
@@ -172,6 +172,54 @@ const AppStyles = {
         width: this.screenWidth/2        
     },
     /**************/
+
+    /***** Menu ******/
+    menuHeader: {
+        width: '100%', 
+        height: 153, 
+        flexDirection: 'row'
+    },
+    useraccimg: { 
+        width:50, 
+        height:50,         
+        alignSelf: 'flex-end',
+        marginLeft: 18,
+        marginBottom: 25
+    },
+    useraccname: {
+        alignSelf: 'flex-end',
+        fontSize:18,
+        color: '#FFFFFF',
+        fontFamily: 'ProximaNovaSoft-Regular',
+        marginLeft: 10,
+        marginBottom: 35,
+    },
+    menuContainer: {
+        flexDirection: 'column'
+    },
+    menuRow: {
+        width: '100%',
+        height: 55, 
+        flexDirection: 'row',
+    },
+    menuIcon: {
+        width:30,
+        height:30,
+        top:5,
+        left:7,
+        // marginLeft:5,
+        alignSelf: 'flex-start',        
+    },
+    menuText: {
+        flex:1,
+        top:15,
+        left:23,
+        alignSelf: 'flex-start',
+        fontSize: 16,
+        fontFamily: 'ProximaNovaSoft-Regular',
+        color: '#8d52ba'
+    }
+    /*************/
 }
 
 export default AppStyles;

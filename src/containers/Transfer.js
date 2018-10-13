@@ -10,8 +10,7 @@ export default class Transfer extends Component {
 	render() {        
         return (           
 			<View>
-				<HeaderBar {...this.props} />      
-				<View><Text>Transfer</Text></View>
+				<HeaderBar {...this.props} title="Transfers" />      				
 			</View>
         );
     }

@@ -8,6 +8,11 @@ import Dashboard from './containers/Dashboard';
 import Payment from './containers/Payment';
 import Transfer from './containers/Transfer';
 
+import Accounts from './containers/Accounts';
+import Cards from './containers/Cards';
+import Airtime from './containers/Airtime';
+import Settings from './containers/Settings';
+
 const routes = {
 	Dashboard : {
 		name : 'Dashboard',
@@ -20,6 +25,22 @@ const routes = {
 	Transfer : {
 		name : 'Transfer',
 		screen : Transfer
+	},
+	Accounts : {
+		name : 'Accounts',
+		screen : Accounts
+	},
+	Cards : {
+		name : 'Cards',
+		screen : Cards
+	},
+	Airtime : {
+		name : 'Airtime',
+		screen : Airtime
+	},
+	Settings : {
+		name : 'Settings',
+		screen : Settings
 	}
 }
 

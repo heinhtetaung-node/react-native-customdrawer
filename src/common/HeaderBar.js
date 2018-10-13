@@ -23,7 +23,7 @@ export default class HeaderBar extends Component {
                     <TouchableOpacity onPress={() => { this.navigatorOpen() }}>      
                         <Image
                             style={[ AppStyles.menuicon, AppStyles.center ]}
-                            source={require('../themes/images/menu.png')}
+                            source={require('../themes/images/menu2.png')}
                         />
                     </TouchableOpacity>
                 </View>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import HeaderBar  from '../common/HeaderBar';
 import { AppStyles } from '../themes';
+
 let $this;
 export default class Dashboard extends Component {
 	constructor(props){
@@ -13,7 +14,7 @@ export default class Dashboard extends Component {
 	screenWidth = Dimensions.get('window').width;    // !important need to refactor
 
 	componentWillMount(){
-		this.addSliderInterval();
+		this.addSliderInterval();		
 	}
 
 	addSliderInterval(){
