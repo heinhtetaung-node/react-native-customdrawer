@@ -24,8 +24,45 @@ const AppStyles = {
         backgroundColor: '#d4b3ed',
         marginLeft: 10
     },     
+    smallHeader: {
+        fontFamily: 'ProximaNovaSoft-Medium',
+        fontSize: 14,        
+        color: '#FFFFFF',
+        marginLeft: 10
+    },
+    transitionTitle: {
+        fontFamily: 'ProximaNovaSoft-Semibold',
+        fontSize: 16,        
+        color: '#959595',
+        marginLeft: 10,
+        marginTop: 9
+    },
+    transitionTime: {
+        fontFamily: 'ProximaNovaSoft-Medium',
+        fontSize: 14,        
+        color: '#959595',
+        marginLeft: 10,        
+        marginTop: 5
+    },
+    transitionAmt: {
+        fontFamily: 'ProximaNovaSoft-Semibold',
+        fontSize: 16,        
+        color: '#E44235',
+        marginRight: 10,
+        marginTop: 9,
+        textAlign: 'right'
+    },
+    transitionType: {
+        fontFamily: 'ProximaNovaSoft-Semibold',
+        fontSize: 14,        
+        color: '#959595',
+        marginRight: 10,        
+        marginTop: 5,
+        textAlign: 'right'
+    },
     /***********/
 
+    
     /* HeaderBar */
     headerBar : {
         zIndex: 1,
@@ -59,6 +96,10 @@ const AppStyles = {
         marginRight: 30,
         fontFamily: 'ProximaNovaSoft-Regular'
     },
+    /****************/
+
+
+    /**** Banner ****/
     banner: {
         height: 260,        
         backgroundColor:'#b46fea'
@@ -66,15 +107,7 @@ const AppStyles = {
     bannerBottomDiv: {
         height: 42,
         backgroundColor: '#77439e',
-    },
-    bgwhite: {
-        backgroundColor: '#ffffff',
-    },
-    bggray: {
-        backgroundColor: '#f1f1f1'
-    },
-    list: {
-        height: 65
+        justifyContent: 'center',
     },
     indicatorBar: {
         height: 30,
@@ -91,8 +124,54 @@ const AppStyles = {
         height: 170,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },    
+    balanceText: {
+        fontFamily: 'ProximaNovaSoft-Regular',
+        fontSize: 18,
+        color: '#FFFFFF',
+        marginTop: 110
+    },
+    NText: {
+        fontFamily: 'ProximaNovaSoft-Semibold',
+        fontSize: 32,
+        marginTop: 12,
+        color: '#FFFFFF'
+    },
+    SPText: {
+        fontFamily: 'ProximaNovaSoft-Semibold',
+        fontSize: 24,
+        marginTop: 12,
+        color: '#FFFFFF'
+    },
     /***********/
+
+
+    /**** Dashboard *****/
+    bgwhite: {
+        backgroundColor: '#ffffff',
+    },
+    bggray: {
+        backgroundColor: '#f1f1f1'
+    },
+    list: {
+        flexDirection: 'row',
+        height: 65
+    },
+    listLeft: {    
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        // backgroundColor: 'green',
+        width: this.screenWidth/2
+    },
+    listRight: {    
+        flex: 1,        
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        // backgroundColor: 'blue',
+        width: this.screenWidth/2        
+    },
+    /**************/
 }
 
 export default AppStyles;

@@ -67,7 +67,9 @@ export default class Dashboard extends Component {
 		return (      
 			<View> 				        
 				<HeaderBar {...this.props} title='Dashboard' /> 
-				<ScrollView style={[ AppStyles.mainContainer ]}>										
+				<ScrollView style={[ AppStyles.mainContainer ]}>	
+
+					{/* Banner */}
 					<View style={[ AppStyles.banner ]}>
 						<ScrollView ref="sliderscroll"
 							horizontal={true}
@@ -76,13 +78,19 @@ export default class Dashboard extends Component {
 							scrollEventThrottle={5}	
 							onMomentumScrollEnd={(event)=>{this.callScrollEvent(event)}}>
 							<View style={[ AppStyles.slideDiv ]}>
-								<Text>abc</Text>
+								<Text style={[ AppStyles.balanceText ]}>Balance</Text>
+								<Text style={[ AppStyles.NText ]}>N 979153.36</Text>
+								<Text style={[ AppStyles.SPText ]}>16.500 SP</Text>
 							</View>
 							<View style={[ AppStyles.slideDiv ]}>
-								<Text>def</Text>
+								<Text style={[ AppStyles.balanceText ]}>Balance</Text>
+								<Text style={[ AppStyles.NText ]}>USD 452.36</Text>
+								<Text style={[ AppStyles.SPText ]}>556,400 MMK</Text>
 							</View>
 							<View style={[ AppStyles.slideDiv ]}>
-								<Text>ghi</Text>
+								<Text style={[ AppStyles.balanceText ]}>Balance</Text>
+								<Text style={[ AppStyles.NText ]}>N 4545.36</Text>
+								<Text style={[ AppStyles.SPText ]}>16.500 SP</Text>
 							</View>							
 						</ScrollView>
 						<View style={[ AppStyles.indicatorBar ]}>							
@@ -97,13 +105,35 @@ export default class Dashboard extends Component {
 							</TouchableWithoutFeedback>
 						</View>
 					</View>
+					{/************************/}
+					
+					{/* Banner Bottom */}
 					<View style={[ AppStyles.bannerBottomDiv ]}>
+						<Text style={[ AppStyles.smallHeader ]}>Latest Transition</Text>
+					</View>
+					{/************************/}
 
-					</View>
+					{/* Content */}
 					<View>
-						<View style={[ AppStyles.list ]}>						
+						<View style={[ AppStyles.list ]}>
+							<View style={[ AppStyles.listLeft ]}>
+								<Text style={[ AppStyles.transitionTitle ]}>ATM Lagos</Text>
+								<Text style={[ AppStyles.transitionTime ]}>Today</Text>
+							</View>
+							<View style={[ AppStyles.listRight ]}>
+								<Text style={[ AppStyles.transitionAmt ]}>- N 450.00</Text>
+								<Text style={[ AppStyles.transitionType ]}>Bank Withdraw</Text>
+							</View>
 						</View>
 						<View style={[ AppStyles.bggray, AppStyles.list ]}>
+							<View style={[ AppStyles.listLeft ]}>
+								<Text style={[ AppStyles.transitionTitle ]}>ATM Lagos</Text>
+								<Text style={[ AppStyles.transitionTime ]}>Today</Text>
+							</View>
+							<View style={[ AppStyles.listRight ]}>
+								<Text style={[ AppStyles.transitionAmt, {color: '#16967A'} ]}>+ N 450.00</Text>
+								<Text style={[ AppStyles.transitionType ]}>Bank Withdraw</Text>
+							</View>
 						</View>
 						<View style={[ AppStyles.list ]}>
 						</View>
@@ -118,6 +148,7 @@ export default class Dashboard extends Component {
 						<View style={[ AppStyles.bggray, AppStyles.list ]}>
 						</View>
 					</View>
+					{/************************/}
 				</ScrollView>
 			</View>
         );
