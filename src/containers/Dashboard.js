@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { FlatList, ScrollView, View, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import HeaderBar  from '../common/HeaderBar';
 import { AppStyles } from '../themes';
 
@@ -7,7 +7,7 @@ let $this;
 export default class Dashboard extends Component {
 	constructor(props){
 		super(props);
-		this.state = { activeSlider: 1, slideEnd : 3 }
+		this.state = { activeSlider: 1, slideEnd : 3, transitions : [] }
 		$this = this;
 	}
 
@@ -15,6 +15,17 @@ export default class Dashboard extends Component {
 
 	componentWillMount(){
 		this.addSliderInterval();		
+		this.getLatestTransitions();		
+	}
+
+	getLatestTransitions(){
+		fetch('https://seedstartest.herokuapp.com/api/transitions').then((response) => response.json()).then((responseJson) => {
+			this.setState({
+				transitions : responseJson
+			})
+		}).catch((error) => {
+			console.error(error);
+		});
 	}
 
 	addSliderInterval(){
@@ -64,11 +75,29 @@ export default class Dashboard extends Component {
 		}, 500);									
 	}
 
+	showDate(d){
+		var d = new Date(d.substr(0,10));		
+		var todaydate = new Date();		
+		var todaydatestr = todaydate.getDate()  + "/" + (todaydate.getMonth()+1) + "/" + todaydate.getFullYear();				
+		var datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+		if(datestring == todaydatestr){
+			return "Today";
+		}
+
+		var yesdate = new Date();
+    	yesdate.setDate(yesdate.getDate()-1);
+		var yesdatestr = yesdate.getDate()  + "/" + (yesdate.getMonth()+1) + "/" + yesdate.getFullYear();		
+		if(datestring == yesdatestr){
+			return "Yesterday";
+		}
+		return datestring;
+	}
+
 	render() {    
 		return (      
-			<View> 				        
+			<View style={[ AppStyles.mainContainer ]}> 				        
 				<HeaderBar {...this.props} title='Dashboard' /> 
-				<ScrollView style={[ AppStyles.mainContainer ]}>	
+				<ScrollView>	
 
 					{/* Banner */}
 					<View style={[ AppStyles.banner ]}>
@@ -116,38 +145,22 @@ export default class Dashboard extends Component {
 
 					{/* Content */}
 					<View>
-						<View style={[ AppStyles.list ]}>
-							<View style={[ AppStyles.listLeft ]}>
-								<Text style={[ AppStyles.transitionTitle ]}>ATM Lagos</Text>
-								<Text style={[ AppStyles.transitionTime ]}>Today</Text>
-							</View>
-							<View style={[ AppStyles.listRight ]}>
-								<Text style={[ AppStyles.transitionAmt ]}>- N 450.00</Text>
-								<Text style={[ AppStyles.transitionType ]}>Bank Withdraw</Text>
-							</View>
-						</View>
-						<View style={[ AppStyles.bggray, AppStyles.list ]}>
-							<View style={[ AppStyles.listLeft ]}>
-								<Text style={[ AppStyles.transitionTitle ]}>ATM Lagos</Text>
-								<Text style={[ AppStyles.transitionTime ]}>Today</Text>
-							</View>
-							<View style={[ AppStyles.listRight ]}>
-								<Text style={[ AppStyles.transitionAmt, {color: '#16967A'} ]}>+ N 450.00</Text>
-								<Text style={[ AppStyles.transitionType ]}>Bank Withdraw</Text>
-							</View>
-						</View>
-						<View style={[ AppStyles.list ]}>
-						</View>
-						<View style={[ AppStyles.bggray, AppStyles.list ]}>
-						</View>
-						<View style={[ AppStyles.list ]}>
-						</View>
-						<View style={[ AppStyles.bggray, AppStyles.list ]}>
-						</View>
-						<View style={[ AppStyles.list ]}>
-						</View>
-						<View style={[ AppStyles.bggray, AppStyles.list ]}>
-						</View>
+						<FlatList
+							data={this.state.transitions} 
+							renderItem={({ item, index }) => (						
+								<View style={[ AppStyles.list, { backgroundColor: ((index%2!=0))? '#f1f1f1' : '#ffffff' } ]}>
+									<View style={[ AppStyles.listLeft ]}>
+										<Text style={[ AppStyles.transitionTitle ]}>{item.transition_name}</Text>
+										<Text style={[ AppStyles.transitionTime ]}>{this.showDate(item.created_at)}</Text>
+									</View>
+									<View style={[ AppStyles.listRight ]}>
+										<Text style={[ AppStyles.transitionAmt, {color:(item.plus_or_minus=='+')? '#16967A' : '#E44235'} ]}>{item.plus_or_minus} {(item.n_or_sp=='n')? 'N' : ''} {parseFloat(item.transition_amt).toFixed(0)} {(item.n_or_sp=='sp')? 'SP' : ''}</Text>
+										<Text style={[ AppStyles.transitionType ]}>{item.transition_type}</Text>
+									</View>
+								</View>
+							)}
+							keyExtractor = { (item, index) => index.toString() }
+						/>						
 					</View>
 					{/************************/}
 				</ScrollView>
@@ -155,4 +168,3 @@ export default class Dashboard extends Component {
         );
     }
 }
-
