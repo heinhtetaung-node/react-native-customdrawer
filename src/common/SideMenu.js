@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { ImageBackground, Dimensions, StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { Image, ImageBackground, Dimensions, StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { AppStyles } from '../themes';
 
 import CustomIcon from '../common/CustomIcon';

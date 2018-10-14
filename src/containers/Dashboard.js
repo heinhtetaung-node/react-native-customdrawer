@@ -7,7 +7,7 @@ let $this;
 export default class Dashboard extends Component {
 	constructor(props){
 		super(props);
-		this.state = { activeSlider: 1, slideEnd : 3, transitions : [] }
+		this.state = { activeSlider: 1, slideEnd : 3, transitions : [],  refreshing: true }
 		$this = this;
 	}
 
@@ -21,10 +21,14 @@ export default class Dashboard extends Component {
 	getLatestTransitions(){
 		fetch('https://seedstartest.herokuapp.com/api/transitions').then((response) => response.json()).then((responseJson) => {
 			this.setState({
-				transitions : responseJson
+				transitions : responseJson,
+				refreshing : false
 			})
 		}).catch((error) => {
 			console.error(error);
+			this.setState({
+				refreshing : false
+			})
 		});
 	}
 
@@ -93,11 +97,21 @@ export default class Dashboard extends Component {
 		return datestring;
 	}
 
+	handleRefresh(){
+		$this.setState({
+			refreshing : true
+		},
+		() => {
+			$this.getLatestTransitions();
+		});		
+	}
+
 	render() {    
-		return (      
-			<View style={[ AppStyles.mainContainer ]}> 				        
+		return (    
+			
+			<View style={[ AppStyles.mainContainer, {flex: 1} ]}> 				        
 				<HeaderBar {...this.props} title='Dashboard' /> 
-				<ScrollView>	
+				<View>	
 
 					{/* Banner */}
 					<View style={[ AppStyles.banner ]}>
@@ -141,30 +155,30 @@ export default class Dashboard extends Component {
 					<View style={[ AppStyles.bannerBottomDiv ]}>
 						<Text style={[ AppStyles.smallHeader ]}>Latest Transition</Text>
 					</View>
-					{/************************/}
+					{/************************/}					
+				</View>
 
-					{/* Content */}
-					<View>
-						<FlatList
-							data={this.state.transitions} 
-							renderItem={({ item, index }) => (						
-								<View style={[ AppStyles.list, { backgroundColor: ((index%2!=0))? '#f1f1f1' : '#ffffff' } ]}>
-									<View style={[ AppStyles.listLeft ]}>
-										<Text style={[ AppStyles.transitionTitle ]}>{item.transition_name}</Text>
-										<Text style={[ AppStyles.transitionTime ]}>{this.showDate(item.created_at)}</Text>
-									</View>
-									<View style={[ AppStyles.listRight ]}>
-										<Text style={[ AppStyles.transitionAmt, {color:(item.plus_or_minus=='+')? '#16967A' : '#E44235'} ]}>{item.plus_or_minus} {(item.n_or_sp=='n')? 'N' : ''} {parseFloat(item.transition_amt).toFixed(0)} {(item.n_or_sp=='sp')? 'SP' : ''}</Text>
-										<Text style={[ AppStyles.transitionType ]}>{item.transition_type}</Text>
-									</View>
-								</View>
-							)}
-							keyExtractor = { (item, index) => index.toString() }
-						/>						
-					</View>
-					{/************************/}
-				</ScrollView>
-			</View>
+				{/* Content */}				
+				<FlatList
+					refreshing={this.state.refreshing}
+					onRefresh={this.handleRefresh}
+					data={this.state.transitions} 
+					renderItem={({ item, index }) => (						
+						<View style={[ AppStyles.list, { backgroundColor: ((index%2!=0))? '#f1f1f1' : '#ffffff' } ]}>
+							<View style={[ AppStyles.listLeft ]}>
+								<Text style={[ AppStyles.transitionTitle ]}>{item.transition_name}</Text>
+								<Text style={[ AppStyles.transitionTime ]}>{this.showDate(item.created_at)}</Text>
+							</View>
+							<View style={[ AppStyles.listRight ]}>
+								<Text style={[ AppStyles.transitionAmt, {color:(item.plus_or_minus=='+')? '#16967A' : '#E44235'} ]}>{item.plus_or_minus} {(item.n_or_sp=='n')? 'N' : ''} {parseFloat(item.transition_amt).toFixed(0)} {(item.n_or_sp=='sp')? 'SP' : ''}</Text>
+								<Text style={[ AppStyles.transitionType ]}>{item.transition_type}</Text>
+							</View>
+						</View>
+					)}
+					keyExtractor = { (item, index) => index.toString() }
+				/>				
+				{/************************/}
+			</View>			
         );
     }
 }
