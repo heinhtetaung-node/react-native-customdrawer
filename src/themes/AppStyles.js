@@ -202,11 +202,11 @@ const AppStyles = {
         height: 55, 
         flexDirection: 'row',
     },
-    menuIcon: {
+    menuCusIcons: {
         width:30,
         height:30,
-        top:5,
-        left:7,
+        top:16,
+        left:12,
         // marginLeft:5,
         alignSelf: 'flex-start',        
     },
