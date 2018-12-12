@@ -3,8 +3,16 @@ import { FlatList, ScrollView, View, Text, Dimensions, TouchableWithoutFeedback 
 import HeaderBar  from '../common/HeaderBar';
 import { AppStyles } from '../themes';
 
+import { connect } from 'react-redux';
+import { getPosts } from './../redux/actions';
+const mapStateToProps = state => {
+    return{
+        transitions : state.postreducer.posts  // redux_step4 getting data from store and connect with view
+    }
+}
+
 let $this;
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 	constructor(props){
 		super(props);
 		this.state = { activeSlider: 1, slideEnd : 3, transitions : [],  refreshing: true }
@@ -14,22 +22,27 @@ export default class Dashboard extends Component {
 	screenWidth = Dimensions.get('window').width;    // !important need to refactor
 
 	componentWillMount(){
-		this.addSliderInterval();		
-		this.getLatestTransitions();		
+		this.addSliderInterval();	
+		this.getLatestTransitions();
+	}
+
+	componentDidMount(){
+		
 	}
 
 	getLatestTransitions(){
-		fetch('https://seedstartest.herokuapp.com/api/transitions').then((response) => response.json()).then((responseJson) => {
-			this.setState({
-				transitions : responseJson,
-				refreshing : false
-			})
-		}).catch((error) => {
-			console.error(error);
-			this.setState({
-				refreshing : false
-			})
-		});
+		this.props.getPosts();  // redux_step1 calling to actions
+		// fetch('https://seedstartest.herokuapp.com/api/transitions').then((response) => response.json()).then((responseJson) => {
+		// 	this.setState({
+		// 		transitions : responseJson,
+		// 		refreshing : false
+		// 	})
+		// }).catch((error) => {
+		// 	console.error(error);
+		// 	this.setState({
+		// 		refreshing : false
+		// 	})
+		// });
 	}
 
 	addSliderInterval(){
@@ -98,12 +111,7 @@ export default class Dashboard extends Component {
 	}
 
 	handleRefresh(){
-		$this.setState({
-			refreshing : true
-		},
-		() => {
-			$this.getLatestTransitions();
-		});		
+		$this.getLatestTransitions();		
 	}
 
 	render() {    
@@ -160,9 +168,9 @@ export default class Dashboard extends Component {
 
 				{/* Content */}				
 				<FlatList
-					refreshing={this.state.refreshing}
+					refreshing={(this.props.transitions.length>0)? false : true}
 					onRefresh={this.handleRefresh}
-					data={this.state.transitions} 
+					data={this.props.transitions} 
 					renderItem={({ item, index }) => (						
 						<View style={[ AppStyles.list, { backgroundColor: ((index%2!=0))? '#f1f1f1' : '#ffffff' } ]}>
 							<View style={[ AppStyles.listLeft ]}>
@@ -182,3 +190,5 @@ export default class Dashboard extends Component {
         );
     }
 }
+
+export default connect(mapStateToProps, { getPosts })(Dashboard);
